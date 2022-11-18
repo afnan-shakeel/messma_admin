@@ -35,9 +35,36 @@ export default {
         }
     },
     methods:{
-        login(){
+        async login(){
             console.log('form ',this.form)
-            this.$router.push('/dashboard')
+            const payload = this.form
+            await this.$axios.post('/auth/login',payload)
+              .then(res => {
+                if(res.data.access_token){
+                  this.$storage.setUniversal('token',res.data.access_token)
+                  console.log('access token set')
+                  this.setAuth();
+                  this.$router.push('/dashboard')
+                }else{
+                  this.$toasted.error('invalid')
+                  console.log('xx',this.$storage.getUniversal('token'))
+                }
+              })
+              .catch( err => {
+                console.log('err x ',err)
+              })
+        },
+        async setAuth(){
+          console.log('tokk',this.$storage.getUniversal('token'))
+          const res = await this.$axios.get('/auth/user',{
+            headers: {
+              Authorization: this.$storage.getUniversal('token')
+            }
+          })
+          .then(res=>{
+            this.$storage.setUniversal('user',res.data)
+          })
+          this.$toasted.error('failed to get auth')
         }
     }
 }

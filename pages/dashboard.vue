@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <h2>dashboard</h2>
-    <v-btn @click="dash()">click</v-btn>
 </v-container>
 </template>
 
@@ -11,8 +10,6 @@ export default {
     
     methods:{
         async dash(){
-            const res = await this.$axios.get('/api/mess')
-            console.log('res ', res)
         }
     }
 

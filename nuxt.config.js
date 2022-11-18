@@ -20,7 +20,10 @@ export default {
   css: ['balm-ui/dist/balm-ui.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/balm-ui'],
+  plugins: [
+    '@/plugins/balm-ui',
+    '@/plugins/vue-toasted.client.js'
+        ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -34,6 +37,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules:[
     '@nuxtjs/axios',
+    '@nuxtjs/universal-storage'
   ],
 
   server: {
@@ -42,7 +46,7 @@ export default {
   },
 
   axios: {
-    baseURL:"http://localhost:8000"
+    baseURL:"http://127.0.0.1:8000",
   },
 
   vuetify: {
@@ -63,7 +67,21 @@ export default {
     }
 },     
 
+  auth:{
+    strategies:{
+      local:{
+        token:{
+          property: 'token',
+          global: true
+        },
+        endpoints:{
+          login: { url:'/auth/login', method: 'post' },
+        }
+      }
 
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
 }
