@@ -2,6 +2,7 @@
     <v-app>
         <v-main>
             <v-container>
+                <!-- <v-text></v-text> -->
                 <Nuxt />
             </v-container>
         </v-main>

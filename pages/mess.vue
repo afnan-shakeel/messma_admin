@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-select
+    <!-- <v-select
     :items="MessList"
     item-text="name"
     item-value="id"
@@ -9,16 +9,16 @@
     outlined
     dense
     clearable>
-    </v-select>
-    <v-btn @click="rightDrawer=true">ADD MESS</v-btn>
-    <MessList v-if="MessList.length>0" v-bind:MessList="MessList"></MessList>
+    </v-select> -->
+    <v-btn v-if="scope && scope.includes('create_mess')" @click="rightDrawer=true">ADD MESS</v-btn>
+    <MessList v-if="MessList.length>0" v-bind:MessList="MessList" v-on:refresh="refresh"></MessList>
     <v-navigation-drawer
     absolute
     floating
     right
     permanent
     v-if="this.rightDrawer">
-        <MessAdd v-if="authData && authData.includes('create_mess')" v-on:refresh="refresh"></MessAdd>
+        <MessAdd v-bind:selectedId="null" v-on:refresh="refresh" ></MessAdd>
     </v-navigation-drawer>
  </v-container>
 </template>
@@ -31,7 +31,6 @@ export default {
     data() {
         return {
             items: ["one", "two"],
-            selectedId: null,
             MessList: [],
             rightDrawer:false,
             scope : this.$storage.getUniversal('user').data.scope,
@@ -44,12 +43,14 @@ export default {
     },
     methods: {
         async getMesses() {
-
-            const api = this.scope.includes('admin_access') ? '/mess/'+this.selectedId : '/mess'
-            const res = await this.$axios.get(api);
-            console.log('res mess ? api',res)
+            // console.log(this.selectedId)
+            const res = await this.$axios.get('/mess',{
+                headers:{
+                    Authorization: this.$storage.getUniversal('token')
+                }
+            })
+            console.log('mess res',res.data)
             this.MessList = res.data.data;
-            console.log("mess ", this.MessList);
         },
         refresh(){
             this.rightDrawer = false,

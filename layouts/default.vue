@@ -4,8 +4,9 @@
         v-model="drawer"
         fixed
         app>
+        <!-- <v-sub-header>OPTIONS</v-sub-header> -->
+
         <v-list>
-        <v-sub-header>OPTIONS</v-sub-header>
 
             <v-list-item
              v-for="(item, i) in menuItems" 
@@ -13,6 +14,7 @@
              :to="item.to"
              router
              exact
+             color="primary"
              >
 
                 <v-list-item-action>
@@ -76,6 +78,13 @@ export default {
 
             },
             {
+                id: 'user',
+                title: 'User',
+                to: '/user',
+                visible: scope.indexOf('admin_access') > -1
+
+            },
+            {
                 id: 'mess',
                 title: 'Mess',
                 to: '/mess',
@@ -91,6 +100,12 @@ export default {
                 id: 'inmates',
                 title: 'Inmates',
                 to: '/inmates',
+                visible: scope.indexOf('admin_access') > -1 ||  scope.indexOf('mess_access') > -1
+            },
+            {
+                id: 'menu-config',
+                title: 'Menu config',
+                to: '/menu-config',
                 visible: scope.indexOf('admin_access') > -1 ||  scope.indexOf('mess_access') > -1
             },
         ]
