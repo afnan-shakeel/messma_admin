@@ -38,6 +38,8 @@
             v-model="time1"
             full-width
             @click:minute="$refs.start_time.save(time1)"
+            ampm-in-title
+            use-seconds
           ></v-time-picker>
       </v-menu>
         <v-menu
@@ -66,6 +68,8 @@
             v-model="time2"
             full-width
             @click:minute="$refs.end_time.save(time2)"
+            ampm-in-title
+            use-seconds
           ></v-time-picker>
       </v-menu>
         <v-btn @click="addConfig()">SUBMIT</v-btn>
