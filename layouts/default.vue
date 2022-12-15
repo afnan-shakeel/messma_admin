@@ -108,6 +108,12 @@ export default {
                 to: '/menu-config',
                 visible: scope.indexOf('admin_access') > -1 ||  scope.indexOf('mess_access') > -1
             },
+            {
+                id: 'report',
+                title: 'Report',
+                to: '/report',
+                visible: scope.indexOf('admin_access') > -1 ||  scope.indexOf('mess_access') > -1
+            },
         ]
     },
     methods:{

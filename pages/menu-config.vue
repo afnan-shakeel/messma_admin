@@ -6,6 +6,7 @@
         item-value="id"
         v-model="selectedId"
         @change="getConfigs()"
+        label="Select mess"
         outlined
         clearable>
         </v-select>
