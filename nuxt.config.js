@@ -50,7 +50,7 @@ export default {
   },
 
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: [],
     theme: {
         dark: false,
         themes: {
