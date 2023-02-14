@@ -124,6 +124,7 @@ export default {
             console.log('get configs',res.data)
             if(res.data.message !== 'Success') this.$toasted.error(`failed to fetch configs`)
             this.configList = JSON.stringify(res.data.data)
+            console.log('configList',this.configList)
 
         },
         editProceed(){
