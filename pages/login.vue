@@ -3,7 +3,7 @@
     <v-container>
       <v-layout align-center justify-center>
       <v-flex xs12 sm12 md4 >
-        <v-card>
+        <v-card v-if="!resetPasscode">
       <v-tabs v-model="tab">
         <v-tab v-for="item in items" :key="item">
             {{item}}
@@ -25,8 +25,14 @@
         </v-card-text>
         <v-card-actions>
         <v-btn color="primary" @click="login()">Submit</v-btn>
+        <v-col align="right">
+        <a @click="resetPasscode = true"> Forgot passcode?</a>
+        </v-col>
         </v-card-actions>
       
+      </v-card>
+      <v-card v-if="resetPasscode">
+        <reset-passcode></reset-passcode>
       </v-card>
       </v-flex>
     </v-layout>
@@ -40,12 +46,13 @@ export default {
     layout:'emptyLayout',
     data(){
         return{
-            items:["admin login","mess login"],
+            items:["admin login"],
             tab:1,
             form:{
                 mobile:null,
                 passcode:null
-            }
+            },
+            resetPasscode: false,
         }
     },
     methods:{
@@ -57,8 +64,16 @@ export default {
                 if(res.data.access_token){
                   this.$storage.setUniversal('token',res.data.access_token)
                   console.log('access token set')
-                  this.setAuth();
-                  this.$router.push('/dashboard')
+                  this.setAuth()
+                  .then(res=>{
+                    console.log('auth res',res)
+                    this.$router.push('/dashboard')
+                  })
+                  .catch(err=>{
+                    console.log('auth err',err)
+                    return;
+                  });
+
                 }else{
                   this.$toasted.error('invalid')
                   console.log('xx',this.$storage.getUniversal('token'))
@@ -76,10 +91,16 @@ export default {
             }
           })
           .then(res=>{
-            this.$storage.setUniversal('user',res.data)
+            if(res.data.data.scope.includes('admin_access') || res.data.data.scope.includes('mess_access')){
+              this.$storage.setUniversal('user',res.data)
+              return;
+          }else{
+            this.$toasted.error('insufficient permission')
+            throw Error('permission denied')
+          }
           })
           // this.$toasted.error('failed to get auth')
-        }
+        },
     }
 }
 

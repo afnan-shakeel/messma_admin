@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-simple-table v-if="cols">
+    <!-- <v-card>
+    {{ this.reportData[0]['_sum']['points'] }}
+    </v-card> -->
+    <!-- <v-simple-table v-if="cols">
         <thead>
             <tr>
             <th v-for="item in cols" :key="item">{{item === "_sum" ? 'POINTS' : item}}</th>
@@ -11,8 +14,7 @@
                     <td v-for="col in cols" :key="col">{{col === "_sum" ? item[col]["points"] : item[col]}}</td>
                 </tr>
             </tbody>
-            <!-- <th></th> -->
-    </v-simple-table>
+    </v-simple-table> -->
   </v-container>
 </template>
 
@@ -35,7 +37,7 @@ export default {
                 this.$toasted.error(`failed to get report`)
                 return
             }
-            console.log('c',this.reportData[0])
+            console.log('reportData',this.reportData)
             const x = Object.keys(this.reportData[0])
             console.log('cols',x)
             const cols = x.filter(x=> !['user_id','mess_id','config_id'].includes(x)) 

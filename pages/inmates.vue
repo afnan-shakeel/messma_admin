@@ -68,6 +68,7 @@ export default {
         refresh(){
             this.rightDrawer = false
             this.getInmates();
+            // this.$router.go()
             console.log('inmates refreshed')
         },
         dash(){

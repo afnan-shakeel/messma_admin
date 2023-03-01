@@ -1,6 +1,8 @@
 <template>
   <v-container>
+    <v-col>
     monthly report
+  </v-col>
   </v-container>
 </template>
 

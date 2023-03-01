@@ -59,6 +59,10 @@ export default {
                     this.$toasted.error('failed')
                     console.log('fail to add inmate',res)
                 }
+            }).catch(err=>{
+                this.$toasted.error('failed')
+                console.log('catch err',err)
+                return;
             })
         },
         cancel(){

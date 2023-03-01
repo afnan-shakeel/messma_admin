@@ -1,6 +1,6 @@
 <template>
   <v-container>
-     report
+    Custom Report 
     <v-col cols="3">
     <v-menu
     :close-on-content-click="false"
@@ -28,27 +28,34 @@
   ></v-date-picker>
   </v-menu>
 </v-col>
-  <v-row v-if="messList">
-  <v-col cols="auto">
-    <v-select v-model="selectedMess" :items="messList" item-text="name" item-value="id" @change="getUserMeals()" label="select mess" dense clearable></v-select></v-col>
-    <v-col cols="auto" v-if="userList && selectedMess">
-    <v-select v-model="selectedUser" :items="userList" item-text="name" item-value="user_id" label="select user" dense clearable></v-select>
+  <v-row v-if="selectedMess && dates">
+   <v-col cols="auto">
+    <!-- <v-select v-model="selectedMess" :items="messList" item-text="name" item-value="id" @change="getUserMeals()" label="select mess" dense clearable></v-select> -->
     </v-col>
+    <v-col cols="auto" v-if="userList">
+    <v-select v-model="selectedUser" :items="userList" item-text="name" item-value="user_id" label="select user" dense clearable></v-select>
+   </v-col>
 
-    <v-col cols="auto" v-if="(mealList && selectedMess)">
+   <v-col cols="auto" v-if="(mealList && selectedMess)">
     <v-select v-model="selectedMeal" :items="mealList" item-text="name" item-value="id" label="select meal" dense clearable></v-select>
-  </v-col>
-  <v-btn @click="submitReport()">submit</v-btn>
-  </v-row>
-    <v-btn @click="reset()">reset</v-btn>
-    <report-list v-if="reportData" v-bind:reportData="reportData" v-bind:userList="userList" v-bind:configs="configs"></report-list>
+   </v-col>
+   <v-btn v-if="dates && (selectedUser || selectedMeal)" @click="submitReport()">submit</v-btn>
+   <v-btn v-if="dates && (selectedUser || selectedMeal)" @click="reset()">reset</v-btn>
+</v-row>
+    <!-- <report-list v-if="reportData" v-bind:reportData="reportData" v-bind:userList="userList" v-bind:configs="configs"></report-list> -->
+    <span><p style='font-family: "Gill Sans", sans-serif;font-size: 1.5em;padding: 18px 12px 2px 32px;' v-if="reportData">{{this.reportData[0] ? this.reportData[0]['_sum']['points'] + ' Points' : '-' }}</p></span>
+    <v-container>
+    <v-row>
+     <report-monthly v-bind:selectedMess="selectedMess"></report-monthly>
+    </v-row>
   </v-container>
+</v-container>
 </template>
 
 <script>
 export default {
     name:'daily-report',
-    props:[],
+    props:['selectedMess'],
     data(){
         return{
             meals: null,
@@ -60,24 +67,29 @@ export default {
             mealList: null,
             userlList: null,
             configs: null,
-            selectedMess:null,
             selectedMeal:null,
             selectedUser:null,
             reportData: null,
+
         }
     },
     mounted(){
-        this.getMess();
+        this.getUserMeals();
     },
     methods:{
-        async getMess(){
-            const messRes = await this.$axios.get('/mess',{
-                headers:{
-                    Authorization: this.$storage.getUniversal('token')
-                }
-            });
-            if(messRes.data && messRes.data.message !== 'Success') return
-            this.messList = messRes.data.data
+        async downloadReport(){
+            const res = await this.$axios.get('report/download?mess_id=2&month=12&year=2022',{
+                responseType: 'blob',
+        })
+            console.log('download res', res)
+            
+            const blob = new Blob([res.data], { type: res.data.type });    
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'report';
+            link.click()
+            URL.revokeObjectURL(link.href)
+            
         },
         async getUserMeals(){
             const mealsRes = await this.$axios.get('/ext/meals')
@@ -177,7 +189,7 @@ export default {
         },
         reset(){
             this.reportData = null,
-            this.selectedMess = null,
+            this.selectedUser = null,
             this.selectedMeal = null,
             this.selectedDay = null,
             this.dates = null,
