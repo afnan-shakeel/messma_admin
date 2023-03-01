@@ -17,11 +17,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['balm-ui/dist/balm-ui.css'],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/balm-ui',
     '@/plugins/vue-toasted.client.js'
         ],
 
@@ -42,15 +41,15 @@ export default {
 
   server: {
     host: '127.0.0.1',
-    port: 8001
+    port: 8013
   },
 
   axios: {
-    baseURL:"http://localhost:8010",
+    baseURL:"http://devapi.asxvec.in",
   },
 
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: [],
     theme: {
         dark: false,
         themes: {
@@ -67,20 +66,6 @@ export default {
     }
 },     
 
-  auth:{
-    strategies:{
-      local:{
-        token:{
-          property: 'token',
-          global: true
-        },
-        endpoints:{
-          login: { url:'/auth/login', method: 'post' },
-        }
-      }
-
-    }
-  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
