@@ -13,7 +13,7 @@
         <v-select :items="days" item-text="name" item-value="id" v-model="selectedDay" label="day" :disabled="selectedConfig ? true:false" outlined dense clearable></v-select>
         <v-text-field v-model="dish_name" label="dish name" outlined dense clearable ></v-text-field>
         <v-text-field v-model="points" label="Points" type="number" outlined dense clearable ></v-text-field>
-        <v-menu
+        <!-- <v-menu
           ref="start_time"
           v-model="start_time"
           :close-on-content-click="false"
@@ -72,7 +72,7 @@
             ampm-in-title
             use-seconds
           ></v-time-picker>
-      </v-menu>
+      </v-menu> -->
         <v-btn @click="addConfig()">SUBMIT</v-btn>
         <v-btn @click="cancel()">CANCEL</v-btn>
       </form>
@@ -94,10 +94,6 @@ export default {
             points:null,
             selectedDay:null,
             selectedMeal:null,
-            time1: null,
-            time2: null,
-            start_time: null,
-            end_time: null,
         }
     },
     mounted(){
@@ -123,8 +119,6 @@ export default {
             this.selectedMeal = res.data.data.meal_id
             this.dish_name = res.data.data.dish_name
             this.points = res.data.data.points
-            this.time1 = res.data.data.start_time
-            this.time2 = res.data.data.end_time
           }
         },
         async getDays(){
@@ -143,8 +137,7 @@ export default {
             day : this.selectedDay,
             points: this.points,
             dish_name: this.dish_name,
-            start_time: this.time1,
-            end_time: this.time2
+
           }
           // if( !this.selectedConfig ) payload.id = this.selectedConfig
           const res = await this.$axios.post(`/menu-config/${this.selectedId}`, payload, {
@@ -161,7 +154,8 @@ export default {
             }
             this.refresh();
           }else{
-            this.$toasted.error('failed')
+            console.log(res.data.content)
+            this.$toasted.error(`failed - ${res.data.content}`)
           }
         },
         cancel(){
@@ -171,8 +165,6 @@ export default {
           this.form = null
           this.selectedDay = null
           this.selectedMeal = null
-          this.time1 = null
-          this.time2 = null
           this.$emit('refresh')
 
         }

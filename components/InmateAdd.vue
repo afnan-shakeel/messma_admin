@@ -11,7 +11,7 @@
         <v-text-field v-model="form.inmate_id" label="inmate id" outlined dense clearable :disabled="selectedInm ? true:false"></v-text-field>
         <v-text-field v-model="form.name" label="name" outlined dense clearable></v-text-field>
         <v-text-field v-model.number="form.mobile" type="number" label="mobile" outlined dense clearable :disabled="selectedInm ? true:false"></v-text-field>
-        <v-text-field v-model="form.email" label="email" outlined dense clearable :disabled="selectedInm ? true:false"></v-text-field>
+        <v-text-field v-model="form.email" label="email" outlined dense clearable></v-text-field>
         <v-text-field v-model="form.address" label="address" outlined dense clearable></v-text-field>
         <v-text-field v-model="form.room" label="room" outlined dense clearable></v-text-field>
         <v-btn @click="add()">SUBMIT</v-btn>

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+<v-container>
 <v-row>
 Generate Monthly Sheet
 </v-row>
@@ -63,7 +63,6 @@ Generate Monthly Sheet
             </tr>
         </tbody>
     </v-simple-table>
-    {{ selectedMess }}
 </v-row>
   </v-container>
 </template>
