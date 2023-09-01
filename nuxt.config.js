@@ -45,7 +45,7 @@ export default {
   },
 
   axios: {
-    baseURL:"http://devapi.asxvec.in",
+    baseURL:"http://localhost:9000",
   },
 
   vuetify: {

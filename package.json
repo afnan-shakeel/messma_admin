@@ -18,6 +18,5 @@
     "vue-toasted": "^1.1.28",
     "vuetify": "^2.6.12",
     "webpack": "^4.44.2"
-  },
-  "devDependencies": {}
+  }
 }
