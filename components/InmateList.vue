@@ -24,6 +24,7 @@
                     <td><v-select v-model="item.status" :items="status" v-on:change="statusChange(item.inmate_id, item.status)"></v-select></td>
                     <td>
                         <v-btn small color="primary" @click="edit(item.user_id)">Edit</v-btn>
+                        <v-btn x-small color="error" @click="deleteInmate(item.user_id)">Remove</v-btn>
                     </td>
                 </tr>
             </tbody>
@@ -73,6 +74,9 @@ export default {
         edit(id){
             this.editDrawer = true
             this.selectedInm = id
+        },
+        async deleteInmate(){
+            console.log('delete inmate func')
         },
         refreshx(){
             this.editDrawer = false

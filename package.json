@@ -13,12 +13,8 @@
     "@nuxtjs/axios": "^5.0.1",
     "@nuxtjs/universal-storage": "^0.5.9",
     "@nuxtjs/vuetify": "^1.12.3",
-    "balm-ui": "^8.55.0",
-    "bulma": "^0.9.4",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
-    "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10",
     "vue-toasted": "^1.1.28",
     "vuetify": "^2.6.12",
     "webpack": "^4.44.2"

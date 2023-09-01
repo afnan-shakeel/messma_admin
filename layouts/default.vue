@@ -9,14 +9,13 @@
         <v-list>
 
             <v-list-item
-             v-for="(item, i) in menuItems" 
+             v-for="(item, i) in menuItems.filter(x=>x.visible === true)" 
              :key="i"
              :to="item.to"
              router
              exact
              color="primary"
-             >
-
+             >     
                 <v-list-item-action>
                     <v-icon>mdi-apps</v-icon>
                 </v-list-item-action>
@@ -112,6 +111,12 @@ export default {
                 id: 'report',
                 title: 'Report',
                 to: '/report',
+                visible: scope.indexOf('admin_access') > -1 ||  scope.indexOf('mess_access') > -1
+            },
+            {
+                id: 'detail-review',
+                title: 'Detail Review',
+                to: '/detail-review',
                 visible: scope.indexOf('admin_access') > -1 ||  scope.indexOf('mess_access') > -1
             },
         ]

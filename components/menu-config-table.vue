@@ -16,14 +16,14 @@
     </thead>
     <tbody>
       <tr v-for="item in tableData" :key="item.meal">
-        <td>{{item['meal']}}</td>
-        <td>{{item['1']}}</td>
-        <td>{{item['2']}}</td>
-        <td>{{item['3']}}</td>
-        <td>{{item['4']}}</td>
-        <td>{{item['5']}}</td>
-        <td>{{item['6']}}</td>
-        <td>{{item['7']}}</td>
+        <td style="font-size: 0.8em; font-weight:500;">{{item['meal']}}</td>
+        <td style="font-size: 0.8em;">{{ item['1']['dish_name'] }} - {{item['1']['point']}}</td>
+        <td style="font-size: 0.8em;">{{ item['2']['dish_name'] }} - {{item['2']['point']}}</td>
+        <td style="font-size: 0.8em;">{{ item['3']['dish_name'] }} - {{item['3']['point']}}</td>
+        <td style="font-size: 0.8em;">{{ item['4']['dish_name'] }} - {{item['4']['point']}}</td>
+        <td style="font-size: 0.8em;">{{ item['5']['dish_name'] }} - {{item['5']['point']}}</td>
+        <td style="font-size: 0.8em;">{{ item['6']['dish_name'] }} - {{item['6']['point']}}</td>
+        <td style="font-size: 0.8em;">{{ item['7']['dish_name'] }} - {{item['7']['point']}}</td>
       </tr>
     </tbody>
   </v-simple-table>
@@ -36,45 +36,6 @@ export default {
     props:['selectedId','configList'],
     data(){
         return{
-          headersx: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
-        ],
-        tableDatax: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          }
-        ],
         headers:[],
         tableData:[],
         }
@@ -124,10 +85,11 @@ export default {
             meal: meal.name
           }
           for ( var day of days){
-            data[day.id] = '-'
+            data[day.id] = {}
             for (var config of JSON.parse(this.configList)){
               if(config.meal_id == meal.id && config.day == day.id){
-                data[day.id] = config.points 
+                data[day.id]['dish_name'] = config.dish_name 
+                data[day.id]['point'] = config.points 
               }
             }
           }
